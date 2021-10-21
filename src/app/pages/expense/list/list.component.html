@@ -1,0 +1,86 @@
+<ng-container >
+    <div class="row">
+        <div class="col">
+            <nb-card [nbSpinner]="isLoading" nbSpinnerStatus="primary" class="compact-card">
+                <nb-card-header>
+                    <nb-icon status="basic" icon="chevron-right">
+                    </nb-icon>
+                   All exepnses
+
+                   <input type="text" nbInput (input)="filterExpense($event)"/>
+                   <button 
+                   [routerLink]="['/expenses/create']"
+                   class="float-right mr-1" outline nbButton
+                                            size="tiny">Create new
+                                        </button>
+                    <button 
+                    (click)="openDialog(dialog)"
+                    class="float-right mr-1" outline nbButton
+                                                size="tiny">
+                                                <nb-icon icon="printer-outline"></nb-icon>
+                                            </button>
+                </nb-card-header>
+                <nb-card-body>
+                    <table class="table table-striped table-sm table-compact p-1">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Description</th>
+                                <th>Amount</th>
+                                <th>Note</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let expense of expenses; let i=index;">
+
+                                <tr>
+                                    <td>{{ expense.id }}</td>
+                                    <td>{{ expense.description }}</td>
+                                    <td>{{ expense.amount }}$</td>
+                                    <td>{{ expense.note }}</td>
+                                    <td>
+                                        <button class="ml-1" outline nbButton
+                                        [routerLink]="['/expenses/edit', expense.getSlug()]"
+                                            size="tiny">
+                                            <nb-icon status="basic" [options]="{ animation: { type: 'pulse' } }"
+                                                icon="edit-outline"> 
+                                            </nb-icon> 
+                                        </button>
+                                        <button class="ml-1" outline nbButton
+                                            (click)="removeExpense(expense)"
+                                            size="tiny">
+                                            <nb-icon status="basic" [options]="{ animation: { type: 'pulse' } }"
+                                                icon="close-outline"> 
+                                            </nb-icon> 
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </nb-card-body>
+            </nb-card>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+    <nb-card  style="width: 500px; margin: 0 auto;">
+        <nb-card-header>
+            <nb-icon icon="printer-outline"></nb-icon>
+            Summury
+            <nb-icon (click)="closeDialog()" class="float-right" icon="close-outline"></nb-icon>
+        </nb-card-header>
+        <nb-card-body>
+            
+
+        </nb-card-body>
+        <nb-card-footer>
+            <button size="tiny" class="float-right" nbButton outline status="success"
+                (click)="printStat()">Print</button>
+            <button (click)="closeDialog()" size="tiny" class="float-right mr-1" nbButton outline ghost
+                status="basic">close</button>
+        </nb-card-footer>
+    </nb-card>
+</ng-template>

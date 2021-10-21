@@ -1,0 +1,41 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 flex-card">
+
+            <nb-card>
+                <nb-card-header>
+                    {{expense.id?'Update expense':'Create expense'}}
+                </nb-card-header>
+                <nb-card-body>
+                    <div class="row">
+                        <div class="col">
+
+                            <div class="form-group">
+                                <label for="firstname">Description</label>
+                                <textarea fieldSize="tiny" id="description" nbInput fullWidth fieldSize="small"
+                                    formControlName="description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Amount</label>
+                                <input fieldSize="tiny" id="amount" nbInput fullWidth fieldSize="small" type="number"
+                                    formControlName="amount">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Note</label>
+                                <textarea fieldSize="tiny" id="note" nbInput fullWidth fieldSize="small"
+                                    formControlName="note"></textarea>
+                            </div>
+
+                        </div>
+                    </div>
+                </nb-card-body>
+                <nb-card-footer>
+
+                    <button size="tiny" status="success" nbButton type="submit" [disabled]="!form.valid">
+                        {{expense.id?'Update':'Save'}}
+                    </button>
+                </nb-card-footer>
+            </nb-card>
+        </div>
+    </div>
+</form>
