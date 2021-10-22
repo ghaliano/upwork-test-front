@@ -1,22 +1,7 @@
 import { NbAuthJWTToken, NbPasswordAuthStrategy } from "@nebular/auth";
-import { environment } from "environments/environment";
+import { environment } from "../../../environments/environment";
 
 const socialLinks = [
-    /*{
-      url: 'https://github.com/akveo/nebular',
-      target: '_blank',
-      icon: 'github',
-    },
-    {
-      url: 'https://www.facebook.com/akveo/',
-      target: '_blank',
-      icon: 'facebook',
-    },
-    {
-      url: 'https://twitter.com/akveo_inc',
-      target: '_blank',
-      icon: 'twitter',
-    },*/
   ]
   export const authSettings: any = {
     strategies: [
@@ -50,6 +35,7 @@ const socialLinks = [
         socialLinks: socialLinks // social links at the bottom of a page
       },
       register: {
+        requireValidToken : false ,
         redirectDelay: 500,
         strategy: 'email',
         showMessages: {
