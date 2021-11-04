@@ -1,0 +1,31 @@
+<div class="row">
+    <div class="col-md-8 offset-md-2 flex-card">
+        <nb-card>
+            <nb-card-header>
+                Checkup assigned to {{checkList.worker.__toString()}} for: {{checkList.shop.__toString()}}
+                <span class="float-right {{ checkList.getStatusCssClass() }}">
+                    {{ checkList.getStatusLabel() }}
+                </span>
+            </nb-card-header>
+        </nb-card>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8 offset-md-2 flex-card">
+        <ng-container *ngFor="let checkListItem of checkList.checkListItems; let i = index">
+            <nb-card [accent]="checkListItem.isApproved()?'success':'default'">
+                <nb-card-header>
+                    <span style="color: #CCC">#{{ checkListItem.id}}</span>
+                    {{ checkListItem.name }}
+                 <nb-icon class="float-right" [icon]="checkListItem.getStatusIconName()"></nb-icon>
+                </nb-card-header>
+                <nb-card-body>
+                    {{checkListItem.workerCheckup}}
+                </nb-card-body>
+                <nb-card-body>
+                    @files or picture here
+                </nb-card-body>
+            </nb-card>
+        </ng-container>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-md-6 offset-md-3 flex-card">
+
+            <nb-card>
+                <nb-card-header>
+                    {{shop.id?'Update existing shop':'Create new shop'}}
+                </nb-card-header>
+                <nb-card-body>
+                    <div class="row">
+                        <div class="col">
+
+                            <div class="form-group">
+                                <label for="firstname">Shop name</label>
+                                <input fieldSize="small" id="name" nbInput fullWidth 
+                                    formControlName="name" />
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Affected worker</label>
+                                <nb-select formControlName="workerId" fullWidth size="small">
+                                    <nb-option *ngFor="let worker of workers" [value]="worker.id">
+                                        {{ worker.__toString() }}</nb-option>
+                                </nb-select>
+                            </div>
+
+                        </div>
+                    </div>
+                </nb-card-body>
+                <nb-card-footer>
+
+                    <button size="tiny" status="success" nbButton type="submit" [disabled]="!form.valid">
+                        {{shop.id?'Update':'Save'}}
+                    </button>
+                </nb-card-footer>
+            </nb-card>
+        </div>
+    </div>
+</form>

@@ -8,7 +8,6 @@ import { ThemeModule } from '../@theme/theme.module';
 import { AuthRoutingModule } from './auth-routing.module';
 import { AuthComponent } from './auth.component';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   imports: [
@@ -28,7 +27,6 @@ import { RegisterComponent } from './register/register.component';
   ],
   declarations: [
     LoginComponent,
-    RegisterComponent,
     AuthComponent,
 
   ]

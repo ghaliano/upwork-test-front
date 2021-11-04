@@ -8,14 +8,21 @@
     </a>
   </div>
 </div>
+<div class="header-container">
+  <div style="width: 200px;" class="mr-3" *ngIf="tracker.show">
+    <small>Téléchargement {{tracker.progress | number:'1.0-0'}}%</small>
+    <nb-progress-bar status="success" [value]="tracker.progress" size="tiny">
+    </nb-progress-bar>
+</div> 
 
 <div class="header-container">
   <nb-actions size="small">
+    <nb-action class="control-item" icon="bell-outline"></nb-action>
     <nb-action class="user-action" *nbIsGranted="['view', 'user']" >
       <nb-user [nbContextMenu]="userMenu"
                [onlyPicture]="userPictureOnly"
                [name]="user?.name"
-               [picture]="user?.picture">
+               [picture]="user?.profilePictureId ? user.profilePicture.getUrl():'assets/images/avatar.png'">
       </nb-user>
     </nb-action>
   </nb-actions>

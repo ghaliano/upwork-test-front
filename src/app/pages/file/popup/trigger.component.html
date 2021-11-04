@@ -1,0 +1,54 @@
+<ng-template #dialog let-data let-ref="dialogRef">
+    <nb-card class="compact-card" style="width: 640px; margin: 0 auto;" [nbSpinner]="isLoading"
+        nbSpinnerStatus="primary">
+        <nb-card-header>
+            <nb-icon icon="menu-2-outline"></nb-icon>
+            Liste des documents
+            <nb-icon (click)="closeModal()" class="float-right" icon="close-outline"></nb-icon>
+        </nb-card-header>
+        <nb-card-body>
+            <div class="p-3">
+                <label for="files" class="badge badge-default">
+                    <nb-icon class="big-bordred-icon" status="basic" [options]="{ animation: { type: 'pulse' } }"
+                        icon="download">
+                    </nb-icon><br />
+                    Importer un fichier
+                </label>
+            </div>
+            <div class="row p-3 box-wrapper">
+                <div class="col-3 box" (click)="toggleFileCheckedChange(file)" *ngFor="let file of files; let i=index;"
+                    [class.selected]="file.checked">
+                    <div class="boxInner">
+                        <img class="img-fluid" [src]="file.isImage?file.getUrl():'assets/images/document.jpg'" />
+
+                        <small>{{file.getDisplayedName()}}</small>
+                        <div><i class="badge badge-success">{{ file.getDisplayedType() }}</i></div>
+
+                    </div><input [ngModel]="file.checked" type="checkbox" />
+                    <button (click)="removeFile(file)" type="button" class="close" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            </div>
+        </nb-card-body>
+        <nb-card-footer>
+            <button size="tiny" [disabled]="!isValid()" (click)="onSelect()" class="float-right" nbButton outline
+                status="info">Valider [{{ getSelectedFile().length }}]</button>
+        </nb-card-footer>
+    </nb-card>
+</ng-template>
+
+<label 
+    [nbSpinner]="tracker.show" 
+    style="cursor: pointer;" 
+    [attr.for]="auto?inputId:null"
+    (click)="openFileModal(dialog)">
+    <ng-content></ng-content>
+</label>
+
+<input 
+    id={{inputId}}
+    type="file" 
+    [attr.multiple]="multiple" 
+    (change)="uploadFiles($event.target.files)"
+    style="display: none;">

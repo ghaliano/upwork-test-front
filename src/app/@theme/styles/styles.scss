@@ -1,26 +1,25 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap");
 
 // themes - our custom or/and out of the box themes
-@import 'themes';
+@import "themes";
 
 // framework component themes (styles tied to theme variables)
-@import '~@nebular/theme/styles/globals';
-@import '~@nebular/auth/styles/globals';
+@import "~@nebular/theme/styles/globals";
+@import "~@nebular/auth/styles/globals";
 
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/mixins';
-@import '~bootstrap/scss/grid';
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/grid";
 
 // loading progress bar theme
-@import './pace.theme';
+@import "./pace.theme";
 
-@import './layout';
-@import './overrides';
+@import "./layout";
+@import "./overrides";
 
 // install the framework and custom global styles
 @include nb-install() {
-
   // framework global styles
   @include nb-theme-global();
   @include nb-auth-global();
@@ -30,8 +29,124 @@
   @include ngx-pace-theme();
 
   @include nb-overrides();
-};
+}
 
-nb-auth-block{
-  max-width: 52rem!important;
+nb-auth-block {
+  max-width: 52rem !important;
+}
+
+.table-compact-container table input:focus {
+  outline-color: transparent;
+  outline-style: none;
+}
+.table-compact-container nb-card {
+  border-color: #edf1f7;
+}
+
+.table-compact {
+  margin-bottom: 0px;
+}
+.table-summury {
+  background: #f7f7f7;
+  color: #bbbbbb;
+  padding: 0px !important;
+}
+
+.table-compact .dndDragover {
+  background-color: rgb(254, 239, 255) !important;
+}
+.table-compact td,
+.table-compact th {
+  font-size: 12px !important;
+  padding: 1px 2px 1px 2px !important;
+}
+
+.table-compact th {
+  border: 1px solid #edf1f7 !important;
+  border-bottom: none !important;
+  border-top: none !important;
+  border-right: none !important;
+}
+.table-compact td.limit,
+.table-compact th.limit {
+  border-left: #cccccc 1px solid !important;
+  padding-left: 4px !important;
+}
+.table-compact td.title {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.compact-card nb-card-body {
+  padding: 0px;
+  text-align: center;
+}
+
+.compact-card nb-card-body {
+  padding: 0px;
+  text-align: center;
+  border-right: #edf1f7 solid 1px;
+}
+.compact-card nb-card-body:last-child {
+  border-right: none solid 0px;
+}
+.compact-card nb-card-header {
+  padding: 1rem 0.5rem;
+}
+.status-pending,
+.status-approved
+ {color: white; font-size: 11px; padding: 3px 14px; border-radius: 3px;}
+
+.status-pending{background-color: #f858ee; color: lightgray;}
+.status-approved{background-color: #9fc907; color: black;}
+
+
+nb-progress-bar {
+  border: 1px solid #7e4fff;
+  border-radius: 6px;
+  padding: 1px;
+}
+
+.document{
+    display: inline-block;
+    margin: 1px;
+    padding: 3px;
+    border-radius: 5px;
+    border: 1px solid rgb(226, 226, 226);
+    text-align: center;
+    width: 80px;
+    height: 80px;
+    overflow: hidden;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.document nb-icon{
+    font-size: 4em !important;
+    padding: 5px;
+    margin: 0px auto;
+}
+
+.document-icon-only nb-icon{
+    margin-top: 12px;
+}
+
+
+nb-progress-bar.size-tiny {
+  padding: 0px!important;
+  border: 0px!important;
+}
+
+nb-progress-bar.size-tiny .progress-container {
+  height: 5px!important;
+  background-color: #dadada!important;
+}
+
+nb-progress-bar.size-tiny .progress-value {
+  color: #323259!important;
+}
+
+.img-profile{
+  height:50px; border-radius: 50%; border: 2px solid #ffffff;
 }

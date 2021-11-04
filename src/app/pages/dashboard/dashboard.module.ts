@@ -13,6 +13,7 @@ import {
 
 import { ThemeModule } from '../../@theme/theme.module';
 import { DashboardComponent } from './dashboard.component';
+import { NotFoundComponent } from './not-found.component';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { DashboardComponent } from './dashboard.component';
     NbButtonModule,
   ],
   declarations: [
-    DashboardComponent
+    DashboardComponent,
+    NotFoundComponent
   ],
 })
 export class DashboardModule { }

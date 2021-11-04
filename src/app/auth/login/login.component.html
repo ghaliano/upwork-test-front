@@ -1,23 +1,13 @@
-<h1 id="title" class="title">Login</h1>
-<p class="sub-title">Hello! Log in with your email.</p>
+<h6 id="title" class="title text-center" style="font-weight: lighter;;">Login</h6>
 
 <nb-alert *ngIf="showMessages.error && errors?.length && !submitted" outline="danger" role="alert">
-  <p class="alert-title"><b>Oh snap!</b></p>
   <ul class="alert-message-list">
     <li *ngFor="let error of errors" class="alert-message">{{ error }}</li>
   </ul>
 </nb-alert>
-
-<nb-alert *ngIf="showMessages.success && messages?.length && !submitted" outline="success" role="alert">
-  <p class="alert-title"><b>Hooray!</b></p>
-  <ul class="alert-message-list">
-    <li *ngFor="let message of messages" class="alert-message">{{ message }}</li>
-  </ul>
-</nb-alert>
-
 <form (ngSubmit)="login()" #form="ngForm" aria-labelledby="title">
 
-  <div class="form-control-group">
+  <div class="form-control-group mt-4">
     <label class="label" for="input-email">Email address:</label>
     <input nbInput
     fieldSize="small"
@@ -28,7 +18,6 @@
            id="input-email"
            pattern=".+@.+\..+"
            placeholder="Email address"
-           fieldSize="large"
            autofocus
            [status]="email.dirty ? (email.invalid  ? 'danger' : 'success') : 'basic'"
            [required]="getConfigValue('forms.validation.email.required')"
@@ -56,11 +45,8 @@
            type="password"
            id="input-password"
            placeholder="Password"
-           fieldSize="large"
            [status]="password.dirty ? (password.invalid  ? 'danger' : 'success') : 'basic'"
            [required]="getConfigValue('forms.validation.password.required')"
-           [minlength]="getConfigValue('forms.validation.password.minLength')"
-           [maxlength]="getConfigValue('forms.validation.password.maxLength')"
            [attr.aria-invalid]="password.invalid && password.touched ? true : null">
     <ng-container *ngIf="password.invalid && password.touched ">
       <p class="caption status-danger" *ngIf="password.errors?.required">
@@ -74,18 +60,13 @@
       </p>
     </ng-container>
   </div>
-
-  <button nbButton
-  size="small"
-          fullWidth
-          status="primary"
-          size="large"
-          [disabled]="submitted || !form.valid"
-          [class.btn-pulse]="submitted">
-    Log In
-  </button>
+  <div class="form-control-group mt-4">
+    <button nbButton
+    size="small"
+            status="primary"
+            [disabled]="submitted || !form.valid"
+            [class.btn-pulse]="submitted">
+      Log In
+    </button>
+  </div>
 </form>
-
-<section class="another-action" aria-label="Register">
-  Don't have an account? <a class="text-link" routerLink="../register">Register</a>
-</section>

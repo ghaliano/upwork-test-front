@@ -1,0 +1,98 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 flex-card">
+            <nb-card>
+                <nb-card-header>
+                    {{checkList.id?'Update existing check list':'Create new check list'}}
+                </nb-card-header>
+                <nb-card-body>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="name">CheckList name</label>
+                                <input fieldSize="small" id="name" nbInput fullWidth formControlName="name" />
+                            </div>
+                            <div class="form-group">
+                                <label for="shopId">Shop</label>
+                                <nb-select formControlName="shopId" fullWidth size="small">
+                                    <nb-option *ngFor="let shop of shops" [value]="shop.id">
+                                        {{ shop.__toString() }}</nb-option>
+                                </nb-select>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Worker</label>
+                                <nb-select formControlName="workerId" fullWidth size="small">
+                                    <nb-option *ngFor="let worker of workers" [value]="worker.id">
+                                        {{ worker.__toString() }}</nb-option>
+                                </nb-select>
+                            </div>
+                        </div>
+                    </div>
+                </nb-card-body>
+                <nb-card-footer>
+                    <button size="tiny" status="success" nbButton type="submit" [disabled]="!form.valid">
+                        {{checkList.id?'Update':'Save'}}
+                    </button>
+                </nb-card-footer>
+            </nb-card>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 offset-md-2 flex-card">
+
+            <nb-card>
+                <nb-card-header>
+                    <input type="text" placeholder="Search for items" style="font-size: 18px; border: 0px none;" />
+                    <button (click)="addCheckListItem()" size="tiny" type="button" class="float-right mr-1" nbButton
+                        outline>add new</button>
+                </nb-card-header>
+                <nb-card-body>
+                    <div class="row">
+                        <div class="col">
+                            <table class="table table-striped table-sm table-compact p-1">
+                                <tbody formArrayName="checkListItems">
+                                    <ng-container
+                                        *ngFor="let checkListItemForm of checkListItems.controls; let i = index">
+                                        <tr>
+                                            <ng-container [formGroup]="checkListItemForm">
+                                                <td>
+                                                    <input type="hidden" formControlName="id" />
+                                                    <input type="hidden" formControlName="status" />
+                                                    <textarea placeholder="What to check ?" nbInput fieldSize="tiny"
+                                                        type="text" class="form-control"
+                                                        fullWidth
+                                                        formControlName="name"></textarea>
+                                                </td>
+                                                <td style="width: 100px;">
+                                                    <nb-select placeholder="choose a widget"
+                                                        formControlName="widgetType"  size="tiny">
+                                                        <nb-option *ngFor="let wt of widgetTypes" [value]="wt.code">
+                                                            {{ wt.name }}</nb-option>
+                                                    </nb-select>
+                                                </td>
+                                                <td>
+                                                    <button class="ml-1" outline nbButton
+                                                        (click)="deleteCheckListItem(i)" size="tiny">
+                                                        <nb-icon status="basic"
+                                                            [options]="{ animation: { type: 'pulse' } }"
+                                                            icon="close-outline">
+                                                        </nb-icon>
+                                                    </button>
+                                                </td>
+                                            </ng-container>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </nb-card-body>
+                <nb-card-footer>
+                    <button size="tiny" status="success" nbButton type="submit" [disabled]="!form.valid">
+                        {{checkList.id?'Update':'Save'}}
+                    </button>
+                </nb-card-footer>
+            </nb-card>
+        </div>
+    </div>
+</form>

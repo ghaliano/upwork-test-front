@@ -11,8 +11,12 @@ import { authSettings, securitySettings } from './utils/security.settings';
 import { EntityDetailResolve } from './utils/entity-detail-resolve.service';
 import { EntityResourceService } from './api/entity.resource.service';
 import { UserApiService } from './api/user.resource.service';
-import { ExpenseApiService } from './api/expense.resource.service';
+import { ShopApiService } from './api/shop.resource.service';
 import { LayoutService } from './utils';
+import { CheckListApiService } from './api/check-list.resource.service';
+import { CheckListItemApiService } from './api/check-list-item.resource.service';
+import { FileApiService } from './api/file.resource.service';
+import { TrackerService } from './utils/tracker.service';
 
 
 export class NbSimpleRoleProvider extends NbRoleProvider {
@@ -44,9 +48,14 @@ export const NB_CORE_PROVIDERS = [
     AuthService,
     EntityResourceService,
     UserApiService,
-    ExpenseApiService,
+    ShopApiService,
+    CheckListApiService,
+    CheckListItemApiService,
+    FileApiService,
     EntityDetailResolve,
-    LayoutService
+    LayoutService,
+
+    TrackerService
   ]
 })
 export class CoreModule {

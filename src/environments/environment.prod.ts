@@ -6,5 +6,6 @@
 export const environment = {
   production: true,
   backend_url: 'http://127.0.0.1:3000',
-  backend_api_url: 'http://127.0.0.1:3000/api'
+  backend_api_url: 'http://127.0.0.1:3000/api',
+  file_base_url: 'http://127.0.0.1:3000/api/uploads'
 };

@@ -1,4 +1,7 @@
 import { EntityResourceInterface, ResourceConfigInterface } from "../api/entity.resource.service";
+import { File } from "./File";
+export const ROLE_WORKER = 'role_worker';
+export const ROLE_ADMIN = 'role_admin';
 
 export class User implements EntityResourceInterface{
   constructor(id?: number){
@@ -9,7 +12,13 @@ export class User implements EntityResourceInterface{
   id?:number;
   email?:string;
   fullName?:string;
+  isEnabled:boolean;
   password?:string;
+  phone:string;
+  role:string;
+  profileImage?: File;
+  profileImageId?: number;
+  createdAt: Date;
 
   getCollectionResourceConfig(): ResourceConfigInterface {
     return {
@@ -30,4 +39,13 @@ export class User implements EntityResourceInterface{
   __toString(){
     return this.fullName;
   }
+
+  getDashboardMenuByRole(){
+  }
+}
+
+
+export interface UserFilter{
+  term?:string;
+  roles?: string[];
 }

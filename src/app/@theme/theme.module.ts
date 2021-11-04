@@ -12,6 +12,8 @@ import {
   NbSelectModule,
   NbIconModule,
   NbThemeModule,
+  NbFormFieldModule,
+  NbProgressBarModule
 } from '@nebular/theme';
 import { NbEvaIconsModule } from '@nebular/eva-icons';
 import { NbSecurityModule } from '@nebular/security';
@@ -44,6 +46,8 @@ const NB_MODULES = [
   NbSelectModule,
   NbIconModule,
   NbEvaIconsModule,
+  NbFormFieldModule,
+  NbProgressBarModule
 ];
 const COMPONENTS = [
   HeaderComponent,

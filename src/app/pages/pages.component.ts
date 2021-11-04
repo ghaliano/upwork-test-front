@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
+import { User } from '../@core/models/User';
 
-import { MENU_ITEMS } from './pages-menu';
+import { getMenuByRole } from './pages-menu';
 
 @Component({
   selector: 'ngx-pages',
@@ -13,6 +15,20 @@ import { MENU_ITEMS } from './pages-menu';
   `,
 })
 export class PagesComponent {
+  user:User;
 
-  menu = MENU_ITEMS;
+  menu = [];
+
+  constructor(private authService: NbAuthService) {
+
+    this.authService.onTokenChange()
+      .subscribe((token: NbAuthJWTToken) => {
+
+        if (token.isValid()) {
+          this.user = token.getPayload() as User;  
+          this.menu = getMenuByRole(this.user.role);
+        }
+
+      });
+  }
 }

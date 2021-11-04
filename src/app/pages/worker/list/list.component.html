@@ -1,0 +1,86 @@
+<ng-container>
+    <div class="row">
+        <div class="col">
+            <nb-card [nbSpinner]="isLoading" nbSpinnerStatus="primary" class="compact-card">
+                <nb-card-header>
+                    <nb-icon status="basic" icon="chevron-right">
+                    </nb-icon>
+                    All workers
+
+
+                    <button [routerLink]="['/workers/create']" class="float-right mr-1" outline nbButton
+                        size="tiny">Create new
+                    </button>
+                    <input class="float-right mr-1" fieldSize="tiny" placeholder="Search" nbInput
+                        (input)="filterWorker($event)" />
+
+                </nb-card-header>
+                <nb-card-body>
+                    <table class="table table-striped table-sm table-compact p-1">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone number</th>
+                                <th>Actif ?</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngFor="let worker of workers; let i=index;">
+
+                                <tr>
+                                    <td>{{ worker.id }}</td>
+                                    <td>
+                                            <img class="img-profile" *ngIf="worker.profileImageId" style="width: 80px;" [src]="worker.profileImage.getUrl()"
+                                                alt="{{ worker.profileImage.getDisplayedName() }}" />
+                                    </td>
+                                    <td>{{ worker.__toString() }}</td>
+                                    <td>{{ worker.email }}</td>
+                                    <td>{{ worker.phone }}</td>
+                                    <td>{{ worker.isEnabled?'Oui':'Non' }}</td>
+                                    <td>
+                                        <button class="ml-1" outline nbButton
+                                            [routerLink]="['/workers/edit', worker.getSlug()]" size="tiny">
+                                            <nb-icon status="basic" [options]="{ animation: { type: 'pulse' } }"
+                                                icon="edit-outline">
+                                            </nb-icon>
+                                        </button>
+                                        <button class="ml-1" outline nbButton (click)="removeWorker(worker)"
+                                            size="tiny">
+                                            <nb-icon status="basic" [options]="{ animation: { type: 'pulse' } }"
+                                                icon="close-outline">
+                                            </nb-icon>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </nb-card-body>
+            </nb-card>
+        </div>
+    </div>
+</ng-container>
+
+<ng-template #dialog let-data let-ref="dialogRef">
+    <nb-card style="width: 500px; margin: 0 auto;">
+        <nb-card-header>
+            <nb-icon icon="printer-outline"></nb-icon>
+            Summury
+            <nb-icon (click)="closeDialog()" class="float-right" icon="close-outline"></nb-icon>
+        </nb-card-header>
+        <nb-card-body>
+
+
+        </nb-card-body>
+        <nb-card-footer>
+            <button size="tiny" class="float-right" nbButton outline status="success"
+                (click)="printStat()">Print</button>
+            <button (click)="closeDialog()" size="tiny" class="float-right mr-1" nbButton outline ghost
+                status="basic">close</button>
+        </nb-card-footer>
+    </nb-card>
+</ng-template>

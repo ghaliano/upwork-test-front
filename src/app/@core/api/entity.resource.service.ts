@@ -2,24 +2,27 @@ import {
   HttpClient,
   HttpErrorResponse,
   HttpParams,
-} from '@angular/common/http';
+} from "@angular/common/http";
 
-import { Injectable } from '@angular/core';
-import { catchError, map } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { catchError, map } from "rxjs/operators";
+import { throwError } from "rxjs";
 
-import { User } from '../models/User';
-import { NbTokenStorage } from '@nebular/auth';
-import { Expense } from '../models/Expense';
-import { NbToastrService } from '@nebular/theme';
-import { environment } from '../../../environments/environment';
+import { User } from "../models/User";
+import { CheckList } from "../models/CheckList";
+import { CheckListItem } from "../models/CheckListItem";
+import { NbTokenStorage } from "@nebular/auth";
+import { Shop } from "../models/Shop";
+import { NbToastrService } from "@nebular/theme";
+import { environment } from "../../../environments/environment";
+import { File } from "../models/File";
 
 @Injectable()
 export class EntityResourceService {
   constructor(
     protected http: HttpClient,
     protected tokenStorage: NbTokenStorage,
-    protected toastr: NbToastrService,
+    protected toastr: NbToastrService
   ) {}
 
   findOneBy(entity: EntityResourceInterface, params: object = {}) {
@@ -28,12 +31,12 @@ export class EntityResourceService {
     return this.http
       .get(
         environment.backend_api_url + config.uri,
-        Object.assign(this.getJwtTokenHedaer(), this.getParamsOption(params)),
+        Object.assign(this.getJwtTokenHedaer(), this.getParamsOption(params))
       )
       .pipe(
         map((result) => {
           return result ? EntityResourceService.hydrate(entity, result) : null;
-        }),
+        })
       );
   }
 
@@ -45,66 +48,68 @@ export class EntityResourceService {
       .pipe(
         map((result) => {
           return result ? EntityResourceService.hydrate(entity, result) : null;
-        }),
+        })
       );
   }
 
   findAll(entity: EntityResourceInterface, params: object = {}) {
-    const config: ResourceConfigInterface = entity.getCollectionResourceConfig();
+    const config: ResourceConfigInterface =
+      entity.getCollectionResourceConfig();
 
     return this.http
       .get(
         environment.backend_api_url + config.uri,
-        Object.assign(this.getJwtTokenHedaer(), this.getParamsOption(params)),
+        Object.assign(this.getJwtTokenHedaer(), this.getParamsOption(params))
       )
       .pipe(
         map((result: any) => {
           return result.length
             ? EntityResourceService.hydrateCollection(entity, result)
             : [];
-        }),
+        })
       );
   }
 
   create(
     entity: EntityResourceInterface,
     dto: any = null,
-    extraOptions: EntityResourceExtraOptions = null,
+    extraOptions: EntityResourceExtraOptions = null
   ) {
     const defaulOptions: EntityResourceExtraOptions = {
       toast: {
         success: {
           title: entity.resourceLabel,
-          message: 'Success !',
+          message: "Success !",
         },
-        error: { title: entity.resourceLabel, message: 'Error !' },
+        error: { title: entity.resourceLabel, message: "Error !" },
       },
     };
 
-    const config: ResourceConfigInterface = entity.getCollectionResourceConfig();
+    const config: ResourceConfigInterface =
+      entity.getCollectionResourceConfig();
     const options: EntityResourceExtraOptions = this.merge(
       defaulOptions,
-      extraOptions,
+      extraOptions
     );
 
     return this.http
       .post(
         environment.backend_api_url + config.uri,
         dto ? dto : entity,
-        this.getJwtTokenHedaer(),
+        this.getJwtTokenHedaer()
       )
       .pipe(
         map((result) => {
           this.toastr.success(
             options.toast.success.message,
-            options.toast.success.title,
+            options.toast.success.title
           );
 
           return result ? EntityResourceService.hydrate(entity, result) : null;
         }),
         catchError((err: any) => {
           return this.handleError(err, entity, options.toast.error);
-        }),
+        })
       );
   }
 
@@ -112,12 +117,13 @@ export class EntityResourceService {
     entity: EntityResourceInterface,
     dto: any = null,
     extraOptions: EntityResourceExtraOptions = null,
+    url:string = null
   ) {
     const defaulOptions: EntityResourceExtraOptions = {
       toast: {
         success: {
           title: entity.resourceLabel,
-          message: 'Success !',
+          message: "Success !",
         },
         error: { title: entity.resourceLabel, message: "Error !" },
       },
@@ -125,85 +131,97 @@ export class EntityResourceService {
     const config: ResourceConfigInterface = entity.getItemResourceConfig();
     const options: EntityResourceExtraOptions = this.merge(
       defaulOptions,
-      extraOptions,
+      extraOptions
     );
 
     return this.http
       .put(
-        environment.backend_api_url + config.uri,
+        url || (environment.backend_api_url + config.uri),
         dto ? dto : entity,
-        this.getJwtTokenHedaer(),
+        this.getJwtTokenHedaer()
       )
       .pipe(
         map((result) => {
           this.toastr.success(
             options.toast.success.message,
-            options.toast.success.title,
+            options.toast.success.title
           );
 
           return result ? EntityResourceService.hydrate(entity, result) : null;
         }),
         catchError((err: any) => {
           return this.handleError(err, entity, options.toast.error);
-        }),
+        })
       );
   }
 
   delete(
     entity: EntityResourceInterface,
-    extraOptions: EntityResourceExtraOptions = null,
+    extraOptions: EntityResourceExtraOptions = null
   ) {
     const defaulOptions: EntityResourceExtraOptions = {
       toast: {
         success: {
           title: entity.resourceLabel,
-          message: 'Success !',
+          message: "Success !",
         },
-        error: { title: entity.resourceLabel, message: 'Error !' },
+        error: { title: entity.resourceLabel, message: "Error !" },
       },
     };
     const config: ResourceConfigInterface = entity.getItemResourceConfig();
     const options: EntityResourceExtraOptions = this.merge(
       defaulOptions,
-      extraOptions,
+      extraOptions
     );
 
     return this.http
       .delete(
         environment.backend_api_url + config.uri,
-        this.getJwtTokenHedaer(),
+        this.getJwtTokenHedaer()
       )
       .pipe(
         map((result) => {
           this.toastr.success(
             options.toast.success.message,
-            options.toast.success.title,
+            options.toast.success.title
           );
 
           return result;
         }),
         catchError((err: any) => {
           return this.handleError(err, entity, options.toast.error);
-        }),
+        })
       );
   }
 
   protected handleError(err, entity: EntityResourceInterface, config: any) {
     if (err instanceof HttpErrorResponse) {
       if (err.status == 500) {
-        this.toastr.danger('Oops!', 'Form errors');
+        this.toastr.danger("Oops!", "Form errors");
       } else {
-        this.toastr.danger('Oops!', 'Unknown error [' + err.status + ']');
+        this.toastr.danger("Oops!", "Unknown error [" + err.status + "]");
       }
     }
     return throwError(err);
   }
 
   protected getJwtTokenHedaer(): any {
-    return { headers: { Authorization: 'Bearer ' + this.tokenStorage.get() } };
+    return { headers: { Authorization: "Bearer " + this.tokenStorage.get() } };
   }
 
-  protected getParamsOption(params): { params: HttpParams } {
+  protected getParamsOption(query): { params: HttpParams } {
+    let params: HttpParams = new HttpParams();
+    for (const key of Object.keys(query)) {
+      if (query[key]) {
+        if (query[key] instanceof Array) {
+          query[key].forEach((item) => {
+            params = params.append(`${key.toString()}[]`, item);
+          });
+        } else {
+          params = params.append(key.toString(), query[key]);
+        }
+      }
+    }
     return { params: params };
   }
 
@@ -238,18 +256,18 @@ export class EntityResourceService {
       JSON.parse(JSON.stringify(json), (key, value) => {
         if (
           value &&
-          value['resourceName'] &&
+          value["resourceName"] &&
           !Array.isArray(value) &&
-          typeof value == 'object'
+          typeof value == "object"
         ) {
           return Object.assign(
-            EntityResourceService.createClass(value['resourceName'], value),
-            value,
+            EntityResourceService.createClass(value["resourceName"], value),
+            value
           );
         }
 
         return value;
-      }),
+      })
     );
   }
 
@@ -257,11 +275,21 @@ export class EntityResourceService {
     let theObject: any;
 
     switch (className) {
-      case 'User':
+      case "User":
         theObject = new User();
         break;
-      case 'Expense':
-        theObject = new Expense();
+      case "Shop":
+        theObject = new Shop();
+        break;
+      case "CheckList":
+        theObject = new CheckList();
+        break;
+      case "File":
+        theObject = new File();
+        break;
+      
+      case "CheckListItem":
+        theObject = new CheckListItem();
         break;
     }
 

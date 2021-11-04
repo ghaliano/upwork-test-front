@@ -1,0 +1,65 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <input type="hidden" formControlName="id" />
+    <div class="row">
+        <div class="col-md-8 offset-md-2 flex-card">
+            <nb-card>
+                <nb-card-header>Checkup for: {{checkList.shop.__toString()}}</nb-card-header>
+            </nb-card>
+        </div>
+    </div>
+    <div class="row" formArrayName="checkListItems">
+        <div class="col-md-8 offset-md-2 flex-card">
+            <ng-container *ngFor="let checkListItemForm of checkListItems.controls; let i = index">
+                <nb-card [accent]="checkList.checkListItems[i].isApproved()?'success':'default'">
+                    <nb-card-header>
+                        <span style="color: #CCC">#{{ checkList.checkListItems[i].id}}</span>
+                        {{ checkList.checkListItems[i].name }}
+                        <button [disabled]="!checkListItemForm.controls.workerCheckup.value" type="button"
+                            (click)="approveCheckListItem(i)" size="tiny" status="success" nbButton
+                            class="float-right mr-1">
+                            Confirm
+                        </button>
+                    </nb-card-header>
+                    <nb-card-body [formGroup]="checkListItemForm">
+                        <input type="hidden" formControlName="id" />
+                        <input type="hidden" formControlName="status" />
+                        <textarea placeholder="Your response" nbInput fieldSize="tiny" fullWidth
+                            formControlName="workerCheckup"></textarea>
+                        <hr />
+                        <div style="display: flex;">
+                            <batiste-file-popup-trigger style="position: relative;" [auto]="true"
+                                [config]="{type: CHECK_LIST_IMAGE_TYPE, params: {isImage: 1}}"
+                                class="document document-icon-only" [multiple]="false"
+                                (onSelectFiles)="onSelectFile($event, checkListItemForm.controls.files,i)">
+                                <nb-icon status="basic" icon="plus-outline"></nb-icon>
+                            </batiste-file-popup-trigger>
+                            <ng-container formArrayName="files">
+                                <ng-container *ngFor="let fileForm of checkListItemForm.get('files').controls, let j= index;">
+                                    <ng-container [formGroupName]="j">
+                                    <input type="hidden" formControlName="id" />
+                                    <img [src]=" checkList.checkListItems[i].files[j].getUrl()"
+                                        class="document document-icon-only" />
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                    </nb-card-body>
+                </nb-card>
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 offset-md-2 flex-card">
+            <nb-card>
+                <nb-card-header>@todo: summury here</nb-card-header>
+                <nb-card-footer>
+                    <button [disabled]="!form.valid" fullWidth size="large" status="success" nbButton type="submit"
+                        [disabled]="!form.valid">
+                        Confirm the checkup
+                    </button>
+                </nb-card-footer>
+            </nb-card>
+        </div>
+    </div>
+</form>

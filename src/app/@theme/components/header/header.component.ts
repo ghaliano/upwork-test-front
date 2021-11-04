@@ -4,6 +4,7 @@ import { NbMediaBreakpointsService, NbMenuService, NbSidebarService, NbThemeServ
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { TrackerService } from 'app/@core/utils/tracker.service';
 
 @Component({
   selector: 'ngx-header',
@@ -34,7 +35,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(private sidebarService: NbSidebarService,
               private menuService: NbMenuService,
               private themeService: NbThemeService,
-              private layoutService: LayoutService,
+              public layoutService: LayoutService,
+              public tracker: TrackerService,
               private breakpointService: NbMediaBreakpointsService) {
   }
 
